@@ -21,6 +21,7 @@ const Home = () => {
 			<h3 style={{ color: "rgb(244, 209, 166)", fontSize: "5rem" }}>
 					To do list
 				</h3>
+				<Form />
 
 		</div>
 	);
