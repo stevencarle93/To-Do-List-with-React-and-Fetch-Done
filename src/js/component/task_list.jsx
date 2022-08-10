@@ -1,5 +1,4 @@
 import React, {  useState } from "react";
-/*import Font from 'react-font'*/
 
 export default function TaskList(props) {
 	
@@ -7,16 +6,9 @@ export default function TaskList(props) {
 	if(props.tasks != "")
 		taskList = props.tasks 
 	else 
-		taskList = "No hay tareas, añadir tareas"
+		taskList = "No task"
 
 	return (
-		/*<div className="d-flex justify-content-center" style={{ marginTop: "2rem" }}>
-			<Font family='Fredericka the Great'>
-				<ul className="list-group list-group-flush" style={{width: "50rem"}}>
-					{taskList}						
-				</ul>
-			</Font>
-		</div>*/
         <div className="d-flex justify-content-center" style={{ marginTop: "2rem" }}>
             <ul className="list-group list-group-flush" style={{width: "50rem"}}>
 					{taskList}						

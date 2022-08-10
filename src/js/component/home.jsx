@@ -1,25 +1,13 @@
 import React, {  useState } from "react";
-/*import Font from 'react-font'*/
 import Form from "./form.jsx";
 
 const Home = () => {
 
 	return (
-		/*<div className="text-center" style={{ marginTop: "1rem" }}>
+		<div className="text-center" style={{ marginTop: "1rem" }} id = 'font-link'>
 			
-			<Font family='Fredericka the Great'>
-				<h3 style={{ color: "rgb(244, 209, 166)", fontSize: "5rem" }}>
-					To do list
-				</h3>
-			</Font>
-			
-			<Form />
-
-		</div>*/
-		<div className="text-center" style={{ marginTop: "1rem" }}>
-			
-			<h3 style={{ color: "rgb(244, 209, 166)", fontSize: "5rem" }}>
-					To do list
+			<h3 style={{ color: "rgb(255, 0, 0)", fontSize: "5rem" }}>
+					TO DO LIST
 				</h3>
 				<Form />
 
