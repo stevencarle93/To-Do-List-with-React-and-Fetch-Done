@@ -1,10 +1,49 @@
-import React, {  useState } from "react";
+import React, {  useState, useEffect } from "react";
 import TaskList from "./task_list.jsx";
 
 export default function Form() {
 
 	const [tasks, setTask] = useState([])
 	const [input, setInput] = useState("")
+	const apiUrl="https://assets.breatheco.de/apis/fake/todos/user/stevenc"
+	
+	useEffect(()=>{
+		// componentDidMount
+		fetch(apiUrl)
+		.then(res=>{
+			if(res.ok) return res.json()
+			else{
+				// Crear la lista con post
+				crearLista()
+			}
+		})
+		.then(data=>setTask(data))
+		.catch(error=>console.error(error))
+	},[])
+
+	useEffect(()=>{
+		// componentDidUpdate
+		fetch(apiUrl,{
+			method:"PUT",
+			body:JSON.stringify(tasks),
+			headers:{"Content-Type":"application/json"}
+		})
+		.then(res=>{
+			console.log(res.status + ": " + res.statusText)
+		})
+		.catch(error=>console.error(error))
+	},[tasks])
+
+	const crearLista= ()=>{
+		fetch(apiUrl,{
+			method:"POST",
+			body:JSON.stringify([]),
+			headers:{
+				"Content-Type":"application/json"
+			}
+		}).then(res=>console.log(res.status))
+		.catch(error=>console.error(error))
+	}
 
 	const handleChange = (event) => {
 		setInput(event.target.value)
@@ -23,13 +62,18 @@ export default function Form() {
 		);
 	};
 
-	let allTasks = tasks.map((elements, index) => 
-				<li key={index.toString()} className="list-group-item d-flex justify-content-between"> 
-					{elements} 
-					<button onClick={() => removeTask(index)}>
-						Remove
-					</button>
-				</li>)
+	let allTasks = tasks.map((elements, index) => {
+		if(tasks != "")
+			return(<li key={index} className="list-group-item d-flex justify-content-between"> 
+				{elements.label}: {elements.done?"Listo":"Pendiente"}
+				<button onClick={() => removeTask(index)}>
+					Remove
+				</button>
+			</li>)
+		else 
+			return "No task"
+		
+	})
 				
 
 	return (
@@ -51,7 +95,10 @@ export default function Form() {
 				</div>
 			</form>
 
-			<TaskList tasks={allTasks}/>
+			{
+				//<TaskList tasks={allTasks}/>
+				allTasks
+			}
 			<h3>
 				Tasks pending: {tasks.length}
 			</h3>
