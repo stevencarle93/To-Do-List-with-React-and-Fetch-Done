@@ -8,29 +8,29 @@ export default function Form() {
 
   useEffect(async () => {
     // componentDidMount
-    /* fetch(apiUrl)
+    /*fetch(apiUrl)
 		.then(res=>{
 			if(res.ok) return res.json()
 			else{
 				// Crear la lista con post
-				crearLista()
+				createList()
 			}
 		})
 		.then(data=>setTask(data))
-		.catch(error=>console.error(error)) */
+		.catch(error=>console.error(error))*/
 
     /*  let response = await fetch(apiUrl) //obj promesa
 		if(response.ok){
 			response = await response.json() //obj javascript
 		}else{
-			crearLista()
-		} */
+			createList()
+		}*/
 
     try {
       let response = await fetch(apiUrl); //obj promesa
       response = await response.json(); //obj javascript
     } catch {
-      crearLista();
+      createList();
       console.log("effect");
     }
   }, []);
@@ -49,7 +49,7 @@ export default function Form() {
       .catch((error) => console.error(error));
   }, [tasks]);
 
-  const crearLista = () => {
+  const createList = () => {
     fetch(apiUrl, {
       method: "POST",
       body: JSON.stringify([]),
@@ -65,7 +65,7 @@ export default function Form() {
     setInput(event.target.value);
   };
 
-  const infoSubmited = (event) => {
+  const infoSubmitted = (event) => {
     event.preventDefault();
     const data = new FormData(event.target);
     setTask([
@@ -84,6 +84,15 @@ export default function Form() {
     );
   };
 
+  const removeUserTasks = () => {
+	console.log(tasks);
+    fetch(apiUrl, {
+			method: "DELETE",
+			headers: { "Content-Type": "application/json" },
+		}
+	)
+  };
+
   let allTasks = tasks.map((elements, index) => {
     if (tasks != "")
       return (
@@ -100,7 +109,7 @@ export default function Form() {
 
   return (
     <div className="text-center" style={{ marginTop: "1rem" }}>
-      <form id="Form" onSubmit={(e) => infoSubmited(e)}>
+      <form id="Form" onSubmit={(e) => infoSubmitted(e)}>
         <div
           className="form-group d-flex justify-content-center"
           id="font-link"
@@ -132,6 +141,8 @@ export default function Form() {
         allTasks
       }
       <h3>Tasks pending: {tasks.length}</h3>
+	  <button onClick={() => removeUserTasks()}>Remove all</button>
+	  <button onClick={() => createList()}>Create List API</button>
     </div>
   );
 }
